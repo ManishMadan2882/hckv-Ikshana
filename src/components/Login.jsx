@@ -31,7 +31,9 @@ export const Login = () => {
     
         const data = await response.json();
         console.log(data);
+        if(data.type === 'donar')
         window.location.replace('/profile')
+        else window.location.replace('/organs')
 
       };
 

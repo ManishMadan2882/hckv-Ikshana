@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import '../css/Organdonation.css'; // Import the CSS file for styling
-
+import { useEffect } from 'react';
 function OrganDonationForm() {
 //   const [fullName, setFullName] = useState('');
 //   const [email, setEmail] = useState('');
-//   const [phoneNumber, setPhoneNumber] = useState('');
+   const [data, setData] = useState([]);
+
   const [donationType, setDonationType] = useState('');
   
   const handleSubmit = async(event) => {
@@ -18,17 +19,28 @@ function OrganDonationForm() {
       });
   
       const data = await response.json();
-      data.forEach((val)=>{
-              
-         return (
-            <div className='justify-between flex flex-wrap px-1 mt-5 bg-red-300 text-black'>
-               <span>{val.name}</span>
-               <span>{val.email}</span>
-            </div>
-        )
-      })
+      console.log(data);
+      setData(data)
+     
+      
   }
-
+   useEffect(()=>{
+    const load = async ()=>{
+        const response = await fetch('/filter', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({organ:donationType})
+          });
+      
+          const data = await response.json();
+          
+          setData(data)
+         
+       }
+       load()
+   })
   return (
     <div className="organ-donation-form">
    
@@ -36,8 +48,7 @@ function OrganDonationForm() {
       <br></br>
       <div><h2> Choose an Organ</h2></div>
       <label>
-        {/* <h1>Find an Organ!</h1> */}
-        {/* Choose an Organ */}
+        
         <select value={donationType} onChange={(e) => setDonationType(e.target.value)}>
           
           <option value="Pancreas">Pancreas</option>
@@ -52,9 +63,23 @@ function OrganDonationForm() {
         </select>
       </label>
     
+    {
+        data.map((val,key)=>{
+             return(<div className='border-2 border-black mt-4 px-8 py-3 '>
+                  <h1 className='text-4xl float-left'>
+                     {val.name}
+                  </h1>
+                  <br></br>
+                    <span>
+                    {val.email}
+                    </span>
+                    </div>)
+          })
+    }
       <br></br>
 
-      <button  onClick={handleSubmit}  className="submit-button">Submit</button>
+      {/* <button  onClick={handleSubmit}  className="submit-button">Submit</button>
+       */}
     </div>
   );
 }

@@ -11,7 +11,11 @@ const About = () => {
         <a target="_blank" href="https://github.com/Aryan6919/ikshana" className='hover:drop-shadow-md hover:text-purple'><i className="fa-brands fa-github"></i></a>&nbsp;&nbsp;&nbsp;
         <a target="_blank" href="https://www.linkedin.com/in/aryan-arora-875884224/" className='hover:drop-shadow-md hover:text-metal'><i className="fa-brands fa-linkedin"></i> </a>&nbsp;&nbsp;
       </p>
+      <footer className='text-center bg-black text-white py-6'>
+        Built With ❤️ by Hacktivists at Hackverse 4.0
+      </footer>
     </div>
+
   )
 }
 
